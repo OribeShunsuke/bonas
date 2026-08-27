@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>即実行！減点回避チェックリスト</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .warning-banner {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+            border: 3px solid #ffc107;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .warning-banner h2 {
+            font-size: 28px;
+            color: #856404;
+            margin-bottom: 16px;
+        }
+        
+        .warning-banner p {
+            font-size: 18px;
+            color: #856404;
+            line-height: 1.8;
+        }
+        
+        .category-section {
+            margin-bottom: 48px;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 20px 32px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .priority-badge {
+            background: #ffc107;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .check-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+        }
+        
+        .check-item:hover {
+            border-color: #dc3545;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.1);
+        }
+        
+        .check-item-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .check-number {
+            background: #dc3545;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .check-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            flex: 1;
+        }
+        
+        .status-checkbox {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            accent-color: #28a745;
+        }
+        
+        .check-content {
+            margin-left: 56px;
+        }
+        
+        .why-box {
+            background: #fff3cd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .why-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .how-box {
+            background: #d1ecf1;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .how-title {
+            font-weight: 700;
+            color: #0c5460;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .product-recommend {
+            background: #f0f4ff;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .product-image-small {
+            width: 80px;
+            height: 80px;
+            background: #e0e0e0;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+            padding: 4px;
+        }
+        
+        .product-info {
+            flex: 1;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #667eea;
+        }
+        
+        .buy-link {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .summary-section {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-top: 48px;
+        }
+        
+        .summary-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.3);
+            border-radius: 50px;
+            height: 40px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: white;
+            height: 100%;
+            border-radius: 50px;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #28a745;
+        }
+        
+        .action-list {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
+            color: #1a1a1a;
+        }
+        
+        .action-list h3 {
+            color: #28a745;
+            margin-bottom: 16px;
+        }
+        
+        .action-item {
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .action-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .action-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .priority-section {
+            margin-top: 32px;
+        }
+        
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .priority-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 3px solid #ffc107;
+        }
+        
+        .priority-level {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffc107;
+            margin-bottom: 12px;
+        }
+        
+        .priority-items {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .section {
+                padding: 24px;
+            }
+            
+            .check-content {
+                margin-left: 0;
+            }
+            
+            .product-recommend {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>即実行！減点回避チェックリスト</h1>
+        <p>女性が「生理的に無理」と思う20の行動</p>
+        <p style="font-size: 16px; margin-top: 16px;">全部チェックして、今日から改善しよう</p>
+    </div>
+    
+    <div class="container">
+        <!-- 警告バナー -->
+        <div class="warning-banner">
+            <h2>⚠️ 衝撃の事実</h2>
+            <p>
+                <strong>どれだけ顔が良くても、髪型がイケてても、服がオシャレでも、<br>
+                1つでも減点要素があれば全てが台無しになります。</strong><br><br>
+                まずは「マイナスをゼロ」にすることが最優先！<br>
+                このチェックリストで全項目クリアを目指しましょう。
+            </p>
+        </div>
+        
+        <!-- カテゴリー① 匂い対策 -->
+        <div class="category-section">
+            <div class="category-header">
+                <span>🚨</span>
+                <span>カテゴリー① 匂い対策（最優先）</span>
+                <span class="priority-badge">最重要</span>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">1</div>
+                    <div class="check-title">毎日お風呂に入っている</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>風呂に入らないと、汗・皮脂・汚れが溜まる → 体臭の原因。自分では気づかないけど、周りは確実に気づいてます。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>毎日必ず入浴</strong>（シャワーだけでもOK）<br>
+                            <strong>重点的に洗う場所：</strong>耳の裏、首の後ろ、脇、股間、足の指の間<br>
+                            <strong>使用アイテム：</strong>シャンプー、ボディソープ
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">2</div>
+                    <div class="check-title">歯磨き＋フロスを毎日している</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>フロスをしないと、歯と歯の間の汚れが溜まる → 口臭の原因。<strong>フロスをしてない人の口臭は「便器と同レベル」</strong>と言われています。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>朝・夜の1日2回歯磨き</strong><br>
+                            <strong>夜は必ずフロスも使う</strong>（歯と歯の間を掃除）<br>
+                            試しに今日フロスを通してみてください。めちゃくちゃ臭いです。それがあなたの口臭の原因。
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">
+                            <img src="product-floss.jpg" alt="フロス" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-floss.jpg'">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">クリニカ アドバンテージ デンタルフロス</div>
+                            <p style="font-size: 14px; color: #666;">初心者におすすめ。Y字型で使いやすい。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">3</div>
+                    <div class="check-title">舌も磨いている</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p><strong>口臭の原因の8割は舌の汚れ</strong>です。歯を磨いても、舌を磨かないと口臭は消えません。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>舌ブラシで舌の表面を優しくこする</strong>（1日1回でOK）<br>
+                            ⚠️ 強くこすりすぎると舌を傷つけるので注意
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-tongue-brush.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">舌ブラシ W-1</div>
+                            <p style="font-size: 14px; color: #666;">歯科医推奨。優しく舌の汚れを取れる。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">4</div>
+                    <div class="check-title">制汗剤を使っている</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>夏はもちろん、冬でも汗はかきます。<strong>脇汗の匂いは強烈</strong>。自分では気づかないけど、周りは確実に気づいてます。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>毎朝、制汗剤を使う</strong>（スプレータイプ or ロールオンタイプ）<br>
+                            脇に直接塗る → 服を着る<br>
+                            夏場は持ち歩いて、昼にもう一度塗るとベター
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-deodorant.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">Ag+ デオドラントロールオン</div>
+                            <p style="font-size: 14px; color: #666;">ロールオンタイプで直塗り。効果が長持ち。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">5</div>
+                    <div class="check-title">服が生乾き臭くない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>洗濯したのになんか臭い = 生乾き。<strong>女性は生乾きの匂いに超敏感</strong>です。一発でアウト。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>洗濯したら必ず完全に乾燥させる</strong><br>
+                            ・外干しか乾燥機を使う<br>
+                            ・部屋干しの場合は除湿機＋扇風機を併用<br>
+                            ・「ちょっと湿ってる」状態で着るのは絶対NG
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- カテゴリー② ムダ毛処理 -->
+        <div class="category-section">
+            <div class="category-header">
+                <span>✂️</span>
+                <span>カテゴリー② ムダ毛処理</span>
+                <span class="priority-badge">優先度高</span>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">6</div>
+                    <div class="check-title">鼻毛が出ていない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p><strong>どれだけイケメンでも、鼻毛が出てた瞬間に全てが台無し</strong>。女性が一番嫌悪する要素の1つ。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>週に1回、鼻毛カッターでチェック</strong><br>
+                            毎朝、鏡で鼻の穴を確認する習慣をつける<br>
+                            ⚠️ 毛抜きで抜くのはNG（鼻の粘膜を傷つける）
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-nose-hair-cutter.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">パナソニック エチケットカッター</div>
+                            <p style="font-size: 14px; color: #666;">鼻毛カッターの定番。痛くない、安全。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">7</div>
+                    <div class="check-title">耳毛が生えていない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>意外と気づいてない人が多い。女性は意外と見てます。耳の穴の中だけじゃなくて、<strong>耳たぶの産毛</strong>も濃い人は処理必須。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>鼻毛カッターで耳の中も処理</strong><br>
+                            <strong>耳たぶの産毛はシェーバーで処理</strong><br>
+                            月に1回チェック
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">8</div>
+                    <div class="check-title">眉毛がボサボサじゃない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>眉毛が繋がってる人、眉毛が濃すぎて顔が怖い人は即アウト。<strong>眉毛は顔の印象の8割を決める</strong>と言われています。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>最優先：眉毛サロンに行く</strong>（プロに整えてもらう）<br>
+                            自分で処理する場合：<br>
+                            ・眉間の毛を処理<br>
+                            ・目と眉の間の無駄毛を処理<br>
+                            ・長すぎる眉毛をハサミでカット
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-eyebrow-set.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">眉毛セット 6点セット</div>
+                            <p style="font-size: 14px; color: #666;">眉用コーム、ハサミ、シェーバーがセット。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">9</div>
+                    <div class="check-title">爪が伸びていない・汚くない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p><strong>女性は手を見てます</strong>。爪が伸びてたり、爪の間が黒かったりすると「不潔」って思われます。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>週に1回、爪を切る</strong><br>
+                            爪の間の汚れもブラシで取る<br>
+                            深爪しすぎないように注意（白い部分を1mm残す）
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">10</div>
+                    <div class="check-title">ヒゲの剃り残しがない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>ヒゲを生やしてない人は、毎日ちゃんと剃ってください。剃り残しがあると、<strong>だらしなく見えます</strong>。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>毎朝ヒゲを剃る</strong><br>
+                            特に剃り残しやすい場所：<br>
+                            ・首の下<br>
+                            ・顎の下<br>
+                            ・もみあげ下<br>
+                            <strong>青ヒゲが濃い人 → ヒゲ脱毛を強く推奨</strong>（人生が変わる投資）
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-body-trimmer.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">パナソニック ボディトリマー</div>
+                            <p style="font-size: 14px; color: #666;">腕毛・すね毛も処理できる。全身に使える。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- カテゴリー③ 服装の基本 -->
+        <div class="category-section">
+            <div class="category-header">
+                <span>👕</span>
+                <span>カテゴリー③ 服装の基本</span>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">11</div>
+                    <div class="check-title">服が汚れていない・シワだらけじゃない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>シミがついてる服、シワだらけの服は、どれだけ高い服でも<strong>「だらしない」印象</strong>を与えます。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>着る前に必ずチェック</strong><br>
+                            シミがついてたら洗濯 or 捨てる<br>
+                            シワが目立つならアイロンをかける<br>
+                            アイロンが面倒な人 → 形態安定シャツを買う
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">12</div>
+                    <div class="check-title">服のサイズが合っている</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>ブカブカの服、ピチピチの服、どっちもダメ。<strong>サイズが合ってない服は、それだけでダサく見えます</strong>。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            明らかに合ってない服は今すぐ捨てる<br>
+                            次の動画（2-6）でファッションについて詳しく解説します
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">13</div>
+                    <div class="check-title">靴が汚くない・ボロくない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>靴は意外と見られてます。<strong>汚れた靴、ソールがすり減った靴</strong>はアウト。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>靴は定期的に洗う</strong>（スニーカーなら月1回）<br>
+                            ボロくなったら買い替える<br>
+                            白いスニーカーは特に汚れが目立つので注意
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">14</div>
+                    <div class="check-title">靴下に穴が開いていない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>靴を脱ぐ場面で、<strong>靴下に穴が開いてたら最悪</strong>。一発で「だらしない」認定。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            定期的にチェックして、穴が開いてたら捨てる<br>
+                            週に1回、靴下を全部チェックする日を作る
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">15</div>
+                    <div class="check-title">下着を毎日替えている</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>論外中の論外。<strong>下着は毎日替えてください</strong>。当たり前です。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- カテゴリー④ 髪・顔周り -->
+        <div class="category-section">
+            <div class="category-header">
+                <span>💇</span>
+                <span>カテゴリー④ 髪・顔周り</span>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">16</div>
+                    <div class="check-title">髪がボサボサじゃない・フケが出ていない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>髪がボサボサ、フケが肩についてる = <strong>「不潔」の代名詞</strong>。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>毎日シャンプー</strong><br>
+                            <strong>ドライヤーで乾かす</strong>（自然乾燥はNG）<br>
+                            フケが出る人 → シャンプーを変える（次の動画で詳しく解説）
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">17</div>
+                    <div class="check-title">肌がテカテカ・ニキビだらけじゃない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>肌がテカテカ = 脂ぎってる印象。ニキビだらけ = 不潔な印象。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            次の動画（2-3）でスキンケアについて詳しくやります<br>
+                            とりあえず今日は、<strong>朝と夜に顔を洗ってください</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">18</div>
+                    <div class="check-title">唇がガサガサじゃない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>唇がガサガサだと、<strong>不健康に見えます</strong>。女性は意外と見てます。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>リップクリームを塗る</strong>（毎日）<br>
+                            特に冬場は乾燥しやすいので必須
+                        </p>
+                    </div>
+                    <div class="product-recommend">
+                        <div class="product-image-small">画像: product-lip-balm.jpg</div>
+                        <div class="product-info">
+                            <div class="product-name">ニベアメン リップケア</div>
+                            <p style="font-size: 14px; color: #666;">メンズ向け。無香料で使いやすい。</p>
+                            <a href="#" class="buy-link">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- カテゴリー⑤ 姿勢・態度 -->
+        <div class="category-section">
+            <div class="category-header">
+                <span>🚶</span>
+                <span>カテゴリー⑤ 姿勢・態度</span>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">19</div>
+                    <div class="check-title">猫背じゃない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>猫背だと、<strong>自信がなさそうに見えます</strong>。どれだけ外見を整えても、猫背だと台無し。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>気づいた時に、意識的に背筋を伸ばす</strong><br>
+                            スマホのリマインダーで「姿勢」と1時間おきに通知を出す<br>
+                            壁に背中をつけて立つ練習（1日1分）
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="check-item">
+                <div class="check-item-header">
+                    <div class="check-number">20</div>
+                    <div class="check-title">無表情・目が死んでいない</div>
+                    <input type="checkbox" class="status-checkbox" onchange="updateProgress()">
+                </div>
+                <div class="check-content">
+                    <div class="why-box">
+                        <div class="why-title">❌ なぜNG？</div>
+                        <p>無表情、目が死んでる = <strong>「話しかけづらい」「怖い」印象</strong>。</p>
+                    </div>
+                    <div class="how-box">
+                        <div class="how-title">✅ 改善方法</div>
+                        <p>
+                            <strong>最低限、口角を上げる</strong><br>
+                            笑顔じゃなくてもいい。せめて口角だけは上げる。<br>
+                            鏡を見て練習（1日1分）
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 進捗サマリー -->
+        <div class="summary-section">
+            <div class="summary-title">あなたの減点回避達成率</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+            </div>
+            <p style="text-align: center; font-size: 18px; margin-top: 16px;">
+                <span id="completedCount">0</span> / 20項目 クリア
+            </p>
+            
+            <div class="action-list">
+                <h3>📋 優先順位別アクションリスト</h3>
+                
+                <div class="priority-section">
+                    <div class="priority-grid">
+                        <div class="priority-card">
+                            <div class="priority-level">今日中に実行</div>
+                            <div class="priority-items">
+                                ① 匂い対策<br>
+                                （風呂・歯磨き・制汗剤）
+                            </div>
+                        </div>
+                        <div class="priority-card">
+                            <div class="priority-level">今週中に実行</div>
+                            <div class="priority-items">
+                                ② ムダ毛処理<br>
+                                （鼻毛・耳毛・爪）
+                            </div>
+                        </div>
+                        <div class="priority-card">
+                            <div class="priority-level">今週中に実行</div>
+                            <div class="priority-items">
+                                ③ 服装チェック<br>
+                                （汚い服を捨てる）
+                            </div>
+                        </div>
+                        <div class="priority-card">
+                            <div class="priority-level">意識する</div>
+                            <div class="priority-items">
+                                ④ 髪・顔・姿勢<br>
+                                （次回以降で詳しく）
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-item">
+                    <div class="action-title">✅ 今日中に買うべきアイテムTOP5</div>
+                    <p>
+                        1. 鼻毛カッター<br>
+                        2. フロス<br>
+                        3. 舌ブラシ<br>
+                        4. 制汗剤<br>
+                        5. リップクリーム
+                    </p>
+                </div>
+                
+                <div class="action-item">
+                    <div class="action-title">💡 重要なマインドセット</div>
+                    <p>
+                        <strong>完璧を求めない。</strong><br>
+                        20項目全部を今日中にクリアする必要はありません。<br>
+                        優先順位をつけて、1つずつ確実に改善していきましょう。<br><br>
+                        <strong>まずは「匂い対策」から。これだけは今日中に。</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.status-checkbox');
+            const total = checkboxes.length;
+            let completed = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    completed++;
+                }
+            });
+            
+            const percentage = Math.round((completed / total) * 100);
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressFill').textContent = percentage + '%';
+            document.getElementById('completedCount').textContent = completed;
+        }
+    </script>
+</body>
+</html>

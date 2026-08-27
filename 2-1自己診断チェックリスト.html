@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外見レベル診断シート50項目</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #f8f9fa;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 48px 32px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+        
+        .hero p {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+        
+        .content {
+            padding: 32px;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+        
+        .info-box h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+        
+        .info-box ul {
+            margin-left: 20px;
+            color: #4a5568;
+        }
+        
+        .info-box li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .category-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+        
+        .category-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 24px;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-content {
+            padding: 24px;
+        }
+        
+        .check-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            gap: 16px;
+        }
+        
+        .check-item:last-child {
+            border-bottom: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-option input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+        
+        .checkbox-option label {
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            color: #4a5568;
+        }
+        
+        .item-label {
+            flex: 1;
+            font-size: 15px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+        
+        .score-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+            color: white;
+        }
+        
+        .score-card h2 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .score-input-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .score-input-wrapper label {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .score-input-wrapper input {
+            width: 100px;
+            padding: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: #667eea;
+        }
+        
+        .level-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .level-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .level-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+        
+        .level-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .priority-card {
+            background: #fff9e6;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+        
+        .priority-card h2 {
+            color: #92400e;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .priority-block {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .priority-block:last-child {
+            margin-bottom: 0;
+        }
+        
+        .priority-heading {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .priority-list {
+            margin-left: 20px;
+        }
+        
+        .priority-list li {
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .progress-card {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+        
+        .progress-card h2 {
+            color: #065f46;
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .date-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .date-field {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .date-field label {
+            display: block;
+            font-weight: 600;
+            color: #065f46;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .date-field input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #10b981;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        
+        .photo-note {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .photo-note label {
+            display: block;
+            font-weight: 600;
+            color: #065f46;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .photo-note p {
+            font-size: 13px;
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        .download-section {
+            margin: 32px 0;
+            text-align: center;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .footer-note {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 32px;
+        }
+        
+        .footer-note p {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .hero {
+                padding: 32px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 24px;
+            }
+            
+            .hero p {
+                font-size: 14px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .info-box, .score-card, .priority-card, .progress-card {
+                padding: 20px;
+            }
+            
+            .check-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 12px 0;
+            }
+            
+            .checkbox-group {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .item-label {
+                font-size: 14px;
+            }
+            
+            .category-header {
+                font-size: 16px;
+                padding: 14px 16px;
+            }
+            
+            .category-content {
+                padding: 16px;
+            }
+            
+            .date-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+            
+            .download-section {
+                display: none;
+            }
+            
+            .category-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>外見レベル診断シート</h1>
+            <p>50項目の完全チェックリストであなたの現在地を正確に把握しましょう</p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <h2>📋 診断の進め方</h2>
+                <ul>
+                    <li>各項目について、できている場合は「✅」に、できていない場合は「❌」にチェックを入れてください</li>
+                    <li>正直に評価することが成長の第一歩です</li>
+                    <li>✅の数が自動的に計算されます</li>
+                    <li>点数に応じて、優先改善項目を確認しましょう</li>
+                </ul>
+            </div>
+            
+            <!-- カテゴリー①:体型 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>💪</span>
+                    <span>体型(10項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body1-yes" class="yes-check">
+                                <label for="body1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body1-no" class="no-check">
+                                <label for="body1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">体脂肪率が適正範囲内(15〜20%)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body2-yes" class="yes-check">
+                                <label for="body2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body2-no" class="no-check">
+                                <label for="body2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">お腹が出ていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body3-yes" class="yes-check">
+                                <label for="body3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body3-no" class="no-check">
+                                <label for="body3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">二重あごになっていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body4-yes" class="yes-check">
+                                <label for="body4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body4-no" class="no-check">
+                                <label for="body4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">姿勢が良い(猫背ではない)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body5-yes" class="yes-check">
+                                <label for="body5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body5-no" class="no-check">
+                                <label for="body5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">歩き方がだらしなくない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body6-yes" class="yes-check">
+                                <label for="body6-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body6-no" class="no-check">
+                                <label for="body6-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">適度に筋肉がある</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body7-yes" class="yes-check">
+                                <label for="body7-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body7-no" class="no-check">
+                                <label for="body7-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">服のサイズが体型に合っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body8-yes" class="yes-check">
+                                <label for="body8-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body8-no" class="no-check">
+                                <label for="body8-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">肩幅がしっかりしている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body9-yes" class="yes-check">
+                                <label for="body9-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body9-no" class="no-check">
+                                <label for="body9-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">痩せすぎていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body10-yes" class="yes-check">
+                                <label for="body10-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="body10-no" class="no-check">
+                                <label for="body10-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">定期的に運動している</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー②:肌 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>✨</span>
+                    <span>肌(10項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin1-yes" class="yes-check">
+                                <label for="skin1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin1-no" class="no-check">
+                                <label for="skin1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">ニキビがほとんどない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin2-yes" class="yes-check">
+                                <label for="skin2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin2-no" class="no-check">
+                                <label for="skin2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">肌のトーンが明るい</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin3-yes" class="yes-check">
+                                <label for="skin3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin3-no" class="no-check">
+                                <label for="skin3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">クマがない(または目立たない)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin4-yes" class="yes-check">
+                                <label for="skin4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin4-no" class="no-check">
+                                <label for="skin4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">肌がテカテカしていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin5-yes" class="yes-check">
+                                <label for="skin5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin5-no" class="no-check">
+                                <label for="skin5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">毛穴が目立たない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin6-yes" class="yes-check">
+                                <label for="skin6-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin6-no" class="no-check">
+                                <label for="skin6-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">肌がカサカサしていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin7-yes" class="yes-check">
+                                <label for="skin7-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin7-no" class="no-check">
+                                <label for="skin7-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">毎日スキンケアをしている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin8-yes" class="yes-check">
+                                <label for="skin8-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin8-no" class="no-check">
+                                <label for="skin8-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">シミ・そばかすが少ない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin9-yes" class="yes-check">
+                                <label for="skin9-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin9-no" class="no-check">
+                                <label for="skin9-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">唇がガサガサしていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin10-yes" class="yes-check">
+                                <label for="skin10-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="skin10-no" class="no-check">
+                                <label for="skin10-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">顔色が健康的</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー③:髪 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>💇</span>
+                    <span>髪(10項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair1-yes" class="yes-check">
+                                <label for="hair1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair1-no" class="no-check">
+                                <label for="hair1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">髪型が整っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair2-yes" class="yes-check">
+                                <label for="hair2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair2-no" class="no-check">
+                                <label for="hair2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">髪がボサボサではない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair3-yes" class="yes-check">
+                                <label for="hair3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair3-no" class="no-check">
+                                <label for="hair3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">フケが出ていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair4-yes" class="yes-check">
+                                <label for="hair4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair4-no" class="no-check">
+                                <label for="hair4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">髪がベタベタしていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair5-yes" class="yes-check">
+                                <label for="hair5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair5-no" class="no-check">
+                                <label for="hair5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">定期的に美容室に行っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair6-yes" class="yes-check">
+                                <label for="hair6-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair6-no" class="no-check">
+                                <label for="hair6-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">ヘアセットをしている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair7-yes" class="yes-check">
+                                <label for="hair7-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair7-no" class="no-check">
+                                <label for="hair7-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">髪の長さが適切(短すぎず長すぎず)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair8-yes" class="yes-check">
+                                <label for="hair8-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair8-no" class="no-check">
+                                <label for="hair8-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">髪にツヤがある</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair9-yes" class="yes-check">
+                                <label for="hair9-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair9-no" class="no-check">
+                                <label for="hair9-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">毎日シャンプーしている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair10-yes" class="yes-check">
+                                <label for="hair10-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="hair10-no" class="no-check">
+                                <label for="hair10-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">ドライヤーで乾かしている</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー④:眉毛 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>👁️</span>
+                    <span>眉毛(5項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow1-yes" class="yes-check">
+                                <label for="brow1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow1-no" class="no-check">
+                                <label for="brow1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">眉毛が整っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow2-yes" class="yes-check">
+                                <label for="brow2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow2-no" class="no-check">
+                                <label for="brow2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">眉毛が繋がっていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow3-yes" class="yes-check">
+                                <label for="brow3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow3-no" class="no-check">
+                                <label for="brow3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">眉毛がボサボサではない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow4-yes" class="yes-check">
+                                <label for="brow4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow4-no" class="no-check">
+                                <label for="brow4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">眉の形が顔に合っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow5-yes" class="yes-check">
+                                <label for="brow5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="brow5-no" class="no-check">
+                                <label for="brow5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">定期的に眉毛を手入れしている</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー⑤:匂い -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>🌿</span>
+                    <span>匂い(5項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell1-yes" class="yes-check">
+                                <label for="smell1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell1-no" class="no-check">
+                                <label for="smell1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">毎日風呂に入っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell2-yes" class="yes-check">
+                                <label for="smell2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell2-no" class="no-check">
+                                <label for="smell2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">口臭ケアをしている(フロス含む)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell3-yes" class="yes-check">
+                                <label for="smell3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell3-no" class="no-check">
+                                <label for="smell3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">制汗剤を使っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell4-yes" class="yes-check">
+                                <label for="smell4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell4-no" class="no-check">
+                                <label for="smell4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">服が生乾き臭くない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell5-yes" class="yes-check">
+                                <label for="smell5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="smell5-no" class="no-check">
+                                <label for="smell5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">香水または清潔感のある匂いがする</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー⑥:服 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>👔</span>
+                    <span>服(5項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes1-yes" class="yes-check">
+                                <label for="clothes1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes1-no" class="no-check">
+                                <label for="clothes1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">服のサイズが合っている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes2-yes" class="yes-check">
+                                <label for="clothes2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes2-no" class="no-check">
+                                <label for="clothes2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">服が清潔(シミ・シワなし)</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes3-yes" class="yes-check">
+                                <label for="clothes3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes3-no" class="no-check">
+                                <label for="clothes3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">靴が汚れていない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes4-yes" class="yes-check">
+                                <label for="clothes4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes4-no" class="no-check">
+                                <label for="clothes4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">色の組み合わせがおかしくない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes5-yes" class="yes-check">
+                                <label for="clothes5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="clothes5-no" class="no-check">
+                                <label for="clothes5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">TPOに合った服装ができている</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- カテゴリー⑦:姿勢・表情 -->
+            <div class="category-card">
+                <div class="category-header">
+                    <span>🚶</span>
+                    <span>姿勢・表情(5項目)</span>
+                </div>
+                <div class="category-content">
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture1-yes" class="yes-check">
+                                <label for="posture1-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture1-no" class="no-check">
+                                <label for="posture1-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">猫背ではない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture2-yes" class="yes-check">
+                                <label for="posture2-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture2-no" class="no-check">
+                                <label for="posture2-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">笑顔が自然にできる</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture3-yes" class="yes-check">
+                                <label for="posture3-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture3-no" class="no-check">
+                                <label for="posture3-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">目が死んでいない</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture4-yes" class="yes-check">
+                                <label for="posture4-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture4-no" class="no-check">
+                                <label for="posture4-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">歩き方が堂々としている</div>
+                    </div>
+                    <div class="check-item">
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture5-yes" class="yes-check">
+                                <label for="posture5-yes">✅</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="posture5-no" class="no-check">
+                                <label for="posture5-no">❌</label>
+                            </div>
+                        </div>
+                        <div class="item-label">目線が適切(下を向きすぎていない)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 診断結果 -->
+            <div class="score-card">
+                <h2>あなたの診断結果</h2>
+                <div class="score-input-wrapper">
+                    <label>✅の合計数</label>
+                    <input type="number" min="0" max="50" placeholder="0" id="scoreInput" readonly>
+                    <label>/ 50点</label>
+                </div>
+                <div class="level-grid">
+                    <div class="level-item">
+                        <div class="level-title">0〜15点:レベル1(不潔男)</div>
+                        <div class="level-desc">かなり厳しい状態です。でも大丈夫、ここから這い上がれます。優先順位は「減点を減らすこと」です。</div>
+                    </div>
+                    <div class="level-item">
+                        <div class="level-title">16〜30点:レベル2(芋男)</div>
+                        <div class="level-desc">平均的な状態です。多くの人がここにいます。あと一歩で足切りラインを超えられます。</div>
+                    </div>
+                    <div class="level-item">
+                        <div class="level-title">31〜40点:レベル3(垢抜け男)</div>
+                        <div class="level-desc">足切りラインを超えてます!あとは細部を磨いていけばさらに魅力が増します。</div>
+                    </div>
+                    <div class="level-item">
+                        <div class="level-title">41〜50点:レベル4(ガチイケ)</div>
+                        <div class="level-desc">素晴らしいです。このレベルまで来たら、長期的な改善に進んでください。</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 優先改善項目 -->
+            <div class="priority-card">
+                <h2>あなたの優先改善項目TOP3</h2>
+                <div class="priority-block">
+                    <div class="priority-heading">📍 0〜15点の方</div>
+                    <ul class="priority-list">
+                        <li><strong>優先順位①:</strong>匂い対策(体臭・口臭)</li>
+                        <li><strong>優先順位②:</strong>ムダ毛処理(鼻毛・耳毛・爪)</li>
+                        <li><strong>優先順位③:</strong>服の断捨離(汚い服・ボロい靴)</li>
+                    </ul>
+                </div>
+                <div class="priority-block">
+                    <div class="priority-heading">📍 16〜30点の方</div>
+                    <ul class="priority-list">
+                        <li><strong>優先順位①:</strong>肌(スキンケア習慣化)</li>
+                        <li><strong>優先順位②:</strong>髪型(美容室で整える)</li>
+                        <li><strong>優先順位③:</strong>眉毛(眉毛サロンへ)</li>
+                    </ul>
+                </div>
+                <div class="priority-block">
+                    <div class="priority-heading">📍 31〜40点の方</div>
+                    <ul class="priority-list">
+                        <li><strong>優先順位①:</strong>体型(ダイエット・筋トレ)</li>
+                        <li><strong>優先順位②:</strong>ファッション(モテ服10点セット)</li>
+                        <li><strong>優先順位③:</strong>メンズメイク(BBクリーム)</li>
+                    </ul>
+                </div>
+                <div class="priority-block">
+                    <div class="priority-heading">📍 41〜50点の方</div>
+                    <ul class="priority-list">
+                        <li><strong>優先順位①:</strong>姿勢・表情(印象の仕上げ)</li>
+                        <li><strong>優先順位②:</strong>写真撮影(マッチングアプリ対策)</li>
+                        <li><strong>優先順位③:</strong>長期的改善(美容医療など)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 成長記録 -->
+            <div class="progress-card">
+                <h2>30日間成長記録</h2>
+                <div class="date-grid">
+                    <div class="date-field">
+                        <label>診断日(1回目)</label>
+                        <input type="date">
+                        <label style="margin-top: 12px;">点数</label>
+                        <input type="number" min="0" max="50" placeholder="0">
+                    </div>
+                    <div class="date-field">
+                        <label>再診断日(30日後)</label>
+                        <input type="date">
+                        <label style="margin-top: 12px;">点数</label>
+                        <input type="number" min="0" max="50" placeholder="0">
+                    </div>
+                </div>
+                <div class="photo-note">
+                    <label>📸 ビフォー写真(任意)</label>
+                    <p>スマホで今の自分を撮影して保存しておきましょう。30日後に見比べると成長が実感できます。</p>
+                </div>
+            </div>
+            
+            <!-- ダウンロードボタン -->
+            <div class="download-section">
+                <button class="download-btn" onclick="window.print()">📥 PDFとして保存</button>
+            </div>
+            
+            <!-- フッター -->
+            <div class="footer-note">
+                <p>このシートは定期的に見返して、改善状況を確認しましょう。</p>
+                <p>次の動画で、具体的な改善アクションを学んでいきます。必ず変われます!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // チェックボックスの排他制御と点数計算
+        document.addEventListener('DOMContentLoaded', function() {
+            const yesCheckboxes = document.querySelectorAll('.yes-check');
+            const noCheckboxes = document.querySelectorAll('.no-check');
+            const scoreInput = document.getElementById('scoreInput');
+
+            // 各チェックボックスペアの排他制御
+            function setupExclusiveCheckboxes() {
+                // すべてのyes-checkに対して処理
+                yesCheckboxes.forEach((yesBox, index) => {
+                    const noBox = noCheckboxes[index];
+                    
+                    yesBox.addEventListener('change', function() {
+                        if (this.checked) {
+                            noBox.checked = false;
+                        }
+                        calculateScore();
+                    });
+
+                    noBox.addEventListener('change', function() {
+                        if (this.checked) {
+                            yesBox.checked = false;
+                        }
+                        calculateScore();
+                    });
+                });
+            }
+
+            // 点数計算
+            function calculateScore() {
+                let score = 0;
+                yesCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        score++;
+                    }
+                });
+                scoreInput.value = score;
+            }
+
+            // 初期化
+            setupExclusiveCheckboxes();
+            calculateScore();
+        });
+    </script>
+</body>
+</html>

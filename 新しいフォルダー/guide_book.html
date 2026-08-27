@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トレーニングガイドブック</title>
+    <style>
+        /* ------------------------------------- */
+        /* グローバル変数とリセット (V10.0 統一版) */
+        /* ------------------------------------- */
+        :root {
+            /* V10.0 統一カラースキーム */
+            --primary: #1e3a8a;      
+            --secondary: #059669;    
+            --rest: #bfdbfe;         
+            --accent: #dc2626;       
+            --guide: #0ea5e9;        
+            
+            --bg: #f9fafb;           
+            --card-bg: #ffffff;      
+            --text-main: #1f2937;    
+            --text-sub: #6b7280;     
+
+            --font-stack: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            --font-size-base: 16px;
+        }
+
+        /* ------------------------------------- */
+        /* 共通ベーススタイル (モバイル優先) */
+        /* ------------------------------------- */
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px; 
+            line-height: 1.7; 
+            font-size: var(--font-size-base); 
+        }
+
+        .container {
+            max-width: 900px; 
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px 25px; 
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid var(--primary); 
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 { 
+            font-size: 2.2rem; 
+            color: var(--primary); 
+            border-bottom: 4px solid var(--primary); 
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .subtitle { color: var(--text-sub); font-size: 1.1rem; font-style: italic;}
+
+        h2 { 
+            font-size: 1.6rem; 
+            color: var(--primary); 
+            margin-top: 40px; 
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary); 
+            padding-left: 10px;
+        }
+        h3 { 
+            font-size: 1.2rem; 
+            color: var(--text-main); 
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted var(--text-sub);
+        }
+        
+        /* 目次 */
+        .toc {
+            background-color: #eff6ff; 
+            border: 1px solid var(--primary);
+            padding: 20px;
+            margin: 20px 0 30px;
+            border-radius: 10px;
+        }
+        .toc strong { color: var(--primary); }
+        .toc ul { list-style: none; padding: 0; margin: 0; columns: 1; }
+        .toc li a { color: var(--text-main); text-decoration: none; }
+        .toc li a:hover { color: var(--primary); }
+
+        /* 補足/アラートボックス */
+        .supplement-box, .alert-box {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .supplement-box {
+            background-color: #f0f8ff; 
+            border-left: 5px solid var(--guide);
+        }
+        .alert-box {
+            background-color: #fef2f2; 
+            border-left: 5px solid var(--accent); 
+        }
+        .alert-box a {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        /* 戻るボタン */
+        .back-button {
+            display: block; 
+            text-align: center; 
+            margin-top: 40px; 
+            padding: 15px; 
+            background-color: var(--primary); 
+            color: white; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #3b82f6;
+        }
+        
+        /* @media: PC/タブレット向け調整 (601px以上) */
+        @media (min-width: 601px) {
+            .container { padding: 40px; }
+            h1 { font-size: 2.5rem; }
+            .toc ul { columns: 2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏋️‍♂️ トレーニングガイドブック</h1>
+            <p class="subtitle">トレーニングを始める前に知っておくべき必須知識</p>
+        </header>
+
+        <div class="toc">
+            <strong>目次</strong>
+            <ul>
+                <li><a href="#section1">1. トレーニング前の準備</a></li>
+                <li><a href="#section2">2. 正しいフォームの重要性</a></li>
+                <li><a href="#section3">3. 筋肉の超回復と休息</a></li>
+                <li><a href="#section4">4. 栄養と食事の基本</a></li>
+            </ul>
+        </div>
+        
+        <div id="section1">
+            <h2>1. トレーニング前の準備</h2>
+            <div class="alert-box">
+                🚨 **注意**: 運動前の静的ストレッチ（じっと伸ばし続けるストレッチ）は、筋力低下を招く可能性があるため、避けるようにしてください。
+            </div>
+        </div>
+        
+        <div id="section2">
+            <h2>2. 正しいフォームの重要性</h2>
+            <div class="supplement-box">
+                **💡 フォームチェックのポイント**
+                <ul>
+                    <li>スクワット：背中が丸まっていないか、膝がつま先より極端に出ていないか。</li>
+                    <li>ベンチプレス：肩甲骨が寄っているか、ブリッジが適切にできているか。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="section3">
+            <h2>3. 筋肉の超回復と休息</h2>
+            </div>
+
+        <div id="section4">
+            <h2>4. 栄養と食事の基本</h2>
+            <p>どんなに質の高いトレーニングをしても、栄養が不足していると筋肉は成長しません。トレーニングは破壊、食事は建設です。</p>
+            <div class="alert-box">
+                ⚠️ **警告**: 栄養の詳細は<a href="meal_plan_guide.html">**「🍎 食事方針・計算」ページ**</a>で計算ツールとともに確認してください。
+            </div>
+            <ul>
+                <li>**タンパク質**: 筋肉の材料です。体重1kgあたり**1.5〜2.0g**を目安に摂取しましょう。</li>
+                <li>**炭水化物**: エネルギー源です。トレーニングの**1〜2時間前**と**直後**に摂取することで、パフォーマンス向上と筋肉分解の抑制に役立ちます。</li>
+            </ul>
+        </div>
+        
+        <a href="menu_generator.html" class="back-button">
+            ← メニュー＆ログページに戻る
+        </a>
+    </div>
+</body>
+</html>

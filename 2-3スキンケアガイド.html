@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完全初心者向けスキンケア完全ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 8px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6f0 100%);
+            border: 3px solid #fbbf24;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+        
+        .highlight-box h3 {
+            font-size: 24px;
+            color: #92400e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 24px 0;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 12px;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .product-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            font-size: 14px;
+            min-height: 40px;
+        }
+        
+        .product-price {
+            color: #667eea;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .buy-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .buy-button:hover {
+            transform: translateY(-2px);
+            background: #5568d3;
+        }
+        
+        .total-price {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+            margin: 24px 0;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 12px;
+        }
+        
+        .routine-section {
+            margin: 32px 0;
+        }
+        
+        .routine-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px 12px 0 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .routine-content {
+            background: white;
+            border: 2px solid #667eea;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 32px;
+        }
+        
+        .step {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .step-header {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-title-area {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+        
+        .step-subtitle {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .step-content {
+            margin-left: 80px;
+        }
+        
+        .why-box {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .why-title {
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .how-box {
+            background: #fff;
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .how-title {
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 16px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .how-steps {
+            margin-left: 20px;
+        }
+        
+        .how-step-item {
+            margin-bottom: 16px;
+            padding-left: 24px;
+            position: relative;
+        }
+        
+        .how-step-item:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+        
+        .how-step-detail {
+            color: #666;
+            font-size: 14px;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+        
+        .tip-box {
+            background: #fff9e6;
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #fbbf24;
+            margin-bottom: 20px;
+        }
+        
+        .tip-title {
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+        
+        .ng-box {
+            background: #fee;
+            padding: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+            margin-bottom: 20px;
+        }
+        
+        .ng-title {
+            font-weight: 700;
+            color: #dc3545;
+            margin-bottom: 8px;
+        }
+        
+        .step-image {
+            width: 100%;
+            height: 250px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .amount-guide {
+            display: flex;
+            gap: 16px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .amount-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 2px solid #667eea;
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .amount-visual {
+            font-size: 32px;
+            margin: 12px 0;
+        }
+        
+        .amount-label {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 14px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .warning-box h4 {
+            color: #856404;
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-card {
+            background: #e7f3ff;
+            border: 2px solid #2196f3;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .info-card h4 {
+            color: #0d47a1;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background: #f0f4ff;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .challenge-card {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border: 3px solid #10b981;
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+        
+        .challenge-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #065f46;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 24px;
+            }
+            
+            .section {
+                padding: 24px;
+            }
+            
+            .step-content {
+                margin-left: 0;
+            }
+            
+            .step-header {
+                flex-direction: column;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-guide {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>完全初心者向け<br>スキンケア完全ガイド</h1>
+        <p>「何をすればいいか全くわからない」あなたへ</p>
+        <p style="font-size: 16px; margin-top: 16px;">朝夜5分×30日で「肌キレイだね」と言われる</p>
+    </div>
+    
+    <div class="container">
+        <!-- スキンケアとは -->
+        <div class="section">
+            <h2 class="section-title">📖 そもそもスキンケアって何？</h2>
+            
+            <div class="info-card">
+                <h4>🤔 スキンケアの目的</h4>
+                <p style="margin-bottom: 16px;">
+                    スキンケア = 肌を清潔に保ち、潤いを与えて、健康な状態を維持すること
+                </p>
+                <p style="color: #666;">
+                    <strong>なぜ必要？</strong><br>
+                    ・何もしないと皮脂・汚れが溜まる → ニキビ・肌荒れ<br>
+                    ・乾燥したまま放置 → シワ・くすみ<br>
+                    ・紫外線ダメージ蓄積 → シミ・老化<br>
+                    <strong>→ つまり、スキンケアしないと「不潔」で「老けて」見えます</strong>
+                </p>
+            </div>
+            
+            <div class="highlight-box">
+                <h3>🎯 スキンケアの基本は3ステップ</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 40px; margin-bottom: 8px;">🧼</div>
+                        <div style="font-weight: 700; margin-bottom: 8px;">STEP1: 洗う</div>
+                        <div style="color: #666; font-size: 14px;">汚れ・皮脂を落とす</div>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 40px; margin-bottom: 8px;">💧</div>
+                        <div style="font-weight: 700; margin-bottom: 8px;">STEP2: 潤す</div>
+                        <div style="color: #666; font-size: 14px;">水分を補給する</div>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 40px; margin-bottom: 8px;">🔒</div>
+                        <div style="font-weight: 700; margin-bottom: 8px;">STEP3: 守る</div>
+                        <div style="color: #666; font-size: 14px;">水分を閉じ込める</div>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 24px; color: #92400e; font-weight: 600;">
+                    この3ステップを朝・夜の1日2回やるだけ！
+                </p>
+            </div>
+        </div>
+        
+        <!-- 完全初心者用セット -->
+        <div class="section">
+            <h2 class="section-title">🎯 完全初心者用スキンケア5点セット</h2>
+            
+            <div class="highlight-box">
+                <h3>まず全員これを買ってください</h3>
+                <p style="text-align: center; margin-bottom: 24px; color: #4a5568;">
+                    理由：1000人で検証した「失敗しない鉄板」<br>
+                    <strong>❌「自分の肌質は...」と悩む必要なし</strong><br>
+                    <strong>✅ まずこれで30日試す→その後調整でOK</strong>
+                </p>
+                
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="product-muji-cleanser.jpg" alt="無印良品 マイルド洗顔ジェル" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-muji-cleanser.jpg'">
+                        </div>
+                        <div class="product-name">無印良品<br>マイルド洗顔ジェル</div>
+                        <div class="product-price">¥490</div>
+                        <a href="#" class="buy-button">Amazonで購入</a>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="product-hatomugi-lotion.jpg" alt="ナチュリエ ハトムギ化粧水" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-hatomugi-lotion.jpg'">
+                        </div>
+                        <div class="product-name">ナチュリエ<br>ハトムギ化粧水</div>
+                        <div class="product-price">¥715</div>
+                        <a href="#" class="buy-button">Amazonで購入</a>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="product-beautifulskin-serum.jpg" alt="Beautiful Skin Cフォーカスエッセンス" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-beautifulskin-serum.jpg'">
+                        </div>
+                        <div class="product-name">Beautiful Skin<br>Cフォーカスエッセンス<br>(美容液)</div>
+                        <div class="product-price">¥4,400</div>
+                        <a href="#" class="buy-button">Amazonで購入</a>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="product-nivea-emulsion.jpg" alt="ニベアメン アクティブエイジローション" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-nivea-emulsion.jpg'">
+                        </div>
+                        <div class="product-name">ニベアメン<br>アクティブエイジローション<br>(乳液)</div>
+                        <div class="product-price">¥1,045</div>
+                        <a href="#" class="buy-button">Amazonで購入</a>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="product-biore-uv.jpg" alt="ビオレUV 日焼け止め" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: product-biore-uv.jpg'">
+                        </div>
+                        <div class="product-name">ビオレUV<br>アクアリッチ<br>(日焼け止め)</div>
+                        <div class="product-price">¥798</div>
+                        <a href="#" class="buy-button">Amazonで購入</a>
+                    </div>
+                </div>
+                
+                <div class="total-price">
+                    合計：¥7,448
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="#" class="buy-button" style="padding: 16px 48px; font-size: 18px;">
+                        Amazon 5点セットで購入
+                    </a>
+                </div>
+                
+                <div class="info-card" style="margin-top: 24px;">
+                    <h4>💡 メイクする人は＋クレンジングも必要</h4>
+                    <div class="product-grid">
+                        <div class="product-card">
+                            <div class="product-image">画像: product-muji-cleansing.jpg</div>
+                            <div class="product-name">無印良品<br>マイルドジェルクレンジング</div>
+                            <div class="product-price">¥750</div>
+                            <a href="#" class="buy-button">Amazonで購入</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 朝のルーティン -->
+        <div class="section">
+            <h2 class="section-title">☀️ 朝のルーティン（5分）</h2>
+            
+            <div class="routine-section">
+                <div class="routine-header">起床後、顔を洗う前にチェック！</div>
+                <div class="routine-content">
+                    <!-- STEP 1: 洗顔 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">1</div>
+                            <div class="step-title-area">
+                                <div class="step-title">洗顔</div>
+                                <div class="step-subtitle">時間：2分</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    寝ている間に分泌された<strong>皮脂・汗・ホコリ</strong>を落とすため。<br>
+                                    朝洗顔しないと → 皮脂が酸化 → ニキビ・肌荒れの原因に。
+                                </p>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手を洗う</strong>
+                                        <div class="how-step-detail">まず石鹸で手を洗う。汚れた手で顔を触ると雑菌が顔につきます。</div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>ぬるま湯で顔を濡らす</strong>
+                                        <div class="how-step-detail">
+                                            温度：30-35度（触って「ちょっと冷たい」くらい）<br>
+                                            ❌NG：熱いお湯 → 必要な皮脂まで落ちて乾燥する
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>洗顔料を泡立てる</strong>
+                                        <div class="how-step-detail">
+                                            <strong>方法1：</strong>泡立てネット（100円）を使う<br>
+                                            <strong>方法2：</strong>ホイップ状の洗顔料を買う（泡立て不要）<br>
+                                            <strong>泡の量：</strong>手のひらいっぱい（レモン1個分くらい）<br>
+                                            ❌NG：泡立てずに直接顔につける → 摩擦で肌が傷つく
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>泡で優しく洗う（30秒）</strong>
+                                        <div class="how-step-detail">
+                                            <strong>洗う順番：</strong>Tゾーン（おでこ・鼻）→ 頬 → 目元・口元<br>
+                                            <strong>洗い方：</strong>円を描くようにクルクル。指の腹で優しく。<br>
+                                            ❌NG：ゴシゴシこする → 摩擦で肌が傷つく
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>ぬるま湯でしっかりすすぐ（1分）</strong>
+                                        <div class="how-step-detail">
+                                            <strong>すすぎ回数：</strong>20-30回<br>
+                                            <strong>注意ポイント：</strong>髪の生え際・フェイスライン・あごは泡が残りやすい<br>
+                                            ❌NG：すすぎ不足 → 洗顔料が残ってニキビの原因に
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>清潔なタオルで拭く</strong>
+                                        <div class="how-step-detail">
+                                            <strong>拭き方：</strong>タオルを顔に当てて「ポンポン」と押さえる<br>
+                                            ❌NG：タオルでゴシゴシ拭く → 摩擦で肌が傷つく
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「泡立てがめんどくさい」という人へ</strong><br>
+                                    → ホイップ状の洗顔料（MINON アミノモイストジェントルウォッシュホイップ ¥1,650）を買えば泡立て不要！
+                                </p>
+                            </div>
+                            
+                            <div class="ng-box">
+                                <div class="ng-title">❌ 絶対やってはいけないNG行動</div>
+                                <ul style="margin-left: 20px; color: #666;">
+                                    <li>泡立てずに直接顔につける</li>
+                                    <li>熱いお湯で洗う</li>
+                                    <li>ゴシゴシこする</li>
+                                    <li>すすぎを適当にする</li>
+                                    <li>同じタオルを何日も使う（雑菌だらけ）</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-morning-wash-detail.jpg" alt="朝の洗顔詳細手順" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-morning-wash-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- STEP 2: 化粧水 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">2</div>
+                            <div class="step-title-area">
+                                <div class="step-title">化粧水</div>
+                                <div class="step-subtitle">時間：1分 / 洗顔後すぐ！</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    洗顔後の肌は水分が蒸発しやすい状態。<br>
+                                    化粧水で<strong>肌に水分を補給</strong>します。<br>
+                                    ❌ 化粧水をつけないと → 肌が乾燥 → カサカサ・くすみの原因に
+                                </p>
+                            </div>
+                            
+                            <div class="amount-guide">
+                                <div class="amount-item">
+                                    <div class="amount-label">適量</div>
+                                    <div class="amount-visual">⭕️</div>
+                                    <div style="font-size: 14px; color: #666;">500円玉大</div>
+                                </div>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手のひらに500円玉大を出す</strong>
+                                        <div class="how-step-detail">
+                                            コットンは使わなくてOK（手で十分）
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>両手に広げる</strong>
+                                        <div class="how-step-detail">
+                                            両手のひらで化粧水を温めるイメージ（体温で浸透しやすくなる）
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>顔全体に優しくパッティング</strong>
+                                        <div class="how-step-detail">
+                                            <strong>つける順番：</strong>頬 → おでこ → 鼻 → あご → 目元・口元<br>
+                                            <strong>つけ方：</strong>「ポンポン」と優しく押し込む（5-10回）<br>
+                                            ❌NG：パンパン叩く → 肌が傷つく
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>首にも塗る</strong>
+                                        <div class="how-step-detail">
+                                            首も顔と同じくらい見られる部分。忘れずに。
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>手のひらで顔を包む（10秒）</strong>
+                                        <div class="how-step-detail">
+                                            手の温度で化粧水を肌に浸透させる
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「500円玉大って多すぎじゃない？」と思う人へ</strong><br>
+                                    → ケチると効果ゼロ。1回500円玉大が適量です。足りないと感じたら追加してOK。
+                                </p>
+                            </div>
+                            
+                            <div class="ng-box">
+                                <div class="ng-title">❌ 絶対やってはいけないNG行動</div>
+                                <ul style="margin-left: 20px; color: #666;">
+                                    <li>洗顔後10分以上経ってからつける（すぐつけないと乾燥する）</li>
+                                    <li>パンパン叩きつける</li>
+                                    <li>量をケチる（効果が出ない）</li>
+                                    <li>化粧水だけで終わる（次の乳液が必須！）</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-lotion-detail.jpg" alt="化粧水の付け方詳細" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-lotion-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- STEP 3: 美容液 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">3</div>
+                            <div class="step-title-area">
+                                <div class="step-title">美容液</div>
+                                <div class="step-subtitle">時間：30秒</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    美容液は<strong>肌の悩みに特化した成分</strong>が濃縮されたアイテム。<br>
+                                    ・ニキビ → ビタミンC配合の美容液<br>
+                                    ・くすみ・シミ → 美白成分配合の美容液<br>
+                                    ・乾燥 → 保湿成分配合の美容液<br>
+                                    <strong>初心者は「ビタミンC配合」を選べばOK</strong>（万能）
+                                </p>
+                            </div>
+                            
+                            <div class="amount-guide">
+                                <div class="amount-item">
+                                    <div class="amount-label">適量</div>
+                                    <div class="amount-visual">⭕️</div>
+                                    <div style="font-size: 14px; color: #666;">パール粒1つ分</div>
+                                </div>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手のひらにパール粒1つ分を出す</strong>
+                                        <div class="how-step-detail">
+                                            商品によって量が違うので、パッケージ記載の量を確認
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>両手に広げる</strong>
+                                        <div class="how-step-detail">
+                                            両手のひらで温める
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>顔全体に伸ばす</strong>
+                                        <div class="how-step-detail">
+                                            <strong>つける順番：</strong>化粧水と同じ（頬 → おでこ → 鼻 → あご → 目元・口元）<br>
+                                            <strong>つけ方：</strong>優しく押し込むように
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>特に気になる部分は重ね塗り</strong>
+                                        <div class="how-step-detail">
+                                            ニキビ跡・シミ・くすみが気になる部分は、もう一度重ねてつける
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「美容液って高いから買いたくない」という人へ</strong><br>
+                                    → 最初の30日は美容液なしでもOK。慣れてきたら追加してください。<br>
+                                    → ただし、ニキビ・シミで悩んでいる人は最初から使うのを強く推奨！
+                                </p>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-serum-detail.jpg" alt="美容液の付け方詳細" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-serum-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- STEP 4: 乳液 -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">4</div>
+                            <div class="step-title-area">
+                                <div class="step-title">乳液</div>
+                                <div class="step-subtitle">時間：1分</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    化粧水・美容液で補給した水分を<strong>「フタ」で閉じ込める</strong>ため。<br>
+                                    乳液には油分が含まれていて、これが肌表面に膜を作る。<br>
+                                    ❌ 乳液をつけないと → 化粧水が蒸発 → 意味がない
+                                </p>
+                            </div>
+                            
+                            <div class="amount-guide">
+                                <div class="amount-item">
+                                    <div class="amount-label">適量</div>
+                                    <div class="amount-visual">⭕️</div>
+                                    <div style="font-size: 14px; color: #666;">10円玉大</div>
+                                </div>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手のひらに10円玉大を出す</strong>
+                                        <div class="how-step-detail">
+                                            乳液は化粧水より少なめでOK
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>両手に広げる</strong>
+                                        <div class="how-step-detail">
+                                            手のひらで温める
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>顔全体に伸ばす</strong>
+                                        <div class="how-step-detail">
+                                            <strong>つける順番：</strong>乾燥しやすい部分から（頬 → おでこ → あご → 鼻 → 目元・口元）<br>
+                                            <strong>つけ方：</strong>優しく伸ばす。ベタベタするくらいでOK（すぐ馴染む）<br>
+                                            ❌NG：Tゾーン（おでこ・鼻）につけすぎる → テカる
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>乾燥しやすい部分は重ね塗り</strong>
+                                        <div class="how-step-detail">
+                                            目元・口元は特に乾燥しやすいので、もう一度重ねてOK
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>手のひらで顔を包む（10秒）</strong>
+                                        <div class="how-step-detail">
+                                            手の温度で乳液を肌に浸透させる
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「乳液をつけるとベタベタする」という人へ</strong><br>
+                                    → 最初はベタつくけど、1-2分で馴染みます。我慢してください。<br>
+                                    → どうしてもベタつきが嫌な人は、量を減らしてもOK（ただし効果は下がる）
+                                </p>
+                            </div>
+                            
+                            <div class="ng-box">
+                                <div class="ng-title">❌ 絶対やってはいけないNG行動</div>
+                                <ul style="margin-left: 20px; color: #666;">
+                                    <li>乳液をつけない（化粧水が蒸発して意味なし）</li>
+                                    <li>ベタつきが嫌だからと極端に少量にする</li>
+                                    <li>Tゾーンにつけすぎる（テカる原因）</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-emulsion-detail.jpg" alt="乳液の付け方詳細" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-emulsion-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- STEP 5: 日焼け止め -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">5</div>
+                            <div class="step-title-area">
+                                <div class="step-title">日焼け止め</div>
+                                <div class="step-subtitle">時間：30秒 / 朝のみ</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    <strong>紫外線は肌の最大の敵</strong>。<br>
+                                    紫外線を浴び続けると → シミ・シワ・くすみ・たるみの原因に。<br>
+                                    しかも紫外線ダメージは蓄積する（30代40代で一気に出てくる）<br>
+                                    ❌ 日焼け止めをつけないと → 10年後に後悔する
+                                </p>
+                            </div>
+                            
+                            <div class="amount-guide">
+                                <div class="amount-item">
+                                    <div class="amount-label">適量</div>
+                                    <div class="amount-visual">⭕️</div>
+                                    <div style="font-size: 14px; color: #666;">パール粒2つ分</div>
+                                </div>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手のひらにパール粒2つ分を出す</strong>
+                                        <div class="how-step-detail">
+                                            ケチると効果ゼロ。たっぷり使う。
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>顔全体に伸ばす</strong>
+                                        <div class="how-step-detail">
+                                            <strong>つける順番：</strong>頬 → おでこ → 鼻 → あご → 首<br>
+                                            <strong>つけ方：</strong>ムラなく塗る。白浮きしてもOK（すぐ馴染む）
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>耳・首の後ろも忘れずに</strong>
+                                        <div class="how-step-detail">
+                                            耳・首は忘れがち。でも日焼けしやすい部分なので必ず塗る。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「室内にいるから日焼け止め不要」は大間違い</strong><br>
+                                    → 窓から紫外線は入ってきます。曇りの日も紫外線は降り注いでいます。<br>
+                                    → 毎日塗るのが鉄則。「外出する日だけ」はNG。
+                                </p>
+                            </div>
+                            
+                            <div class="ng-box">
+                                <div class="ng-title">❌ 絶対やってはいけないNG行動</div>
+                                <ul style="margin-left: 20px; color: #666;">
+                                    <li>「今日は室内だから」と塗らない</li>
+                                    <li>量をケチる（効果がゼロになる）</li>
+                                    <li>朝塗って夜まで塗り直さない（3-4時間おきに塗り直すのが理想）</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-sunscreen-detail.jpg" alt="日焼け止めの付け方詳細" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-sunscreen-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 夜のルーティン -->
+        <div class="section">
+            <h2 class="section-title">🌙 夜のルーティン（5-7分）</h2>
+            
+            <div class="routine-section">
+                <div class="routine-header">お風呂で実行！</div>
+                <div class="routine-content">
+                    <!-- STEP 0: クレンジング（メイクする人のみ） -->
+                    <div class="step">
+                        <div class="step-header">
+                            <div class="step-number">0</div>
+                            <div class="step-title-area">
+                                <div class="step-title">クレンジング</div>
+                                <div class="step-subtitle">時間：2分 / メイクする人のみ</div>
+                            </div>
+                        </div>
+                        
+                        <div class="step-content">
+                            <div class="why-box">
+                                <div class="why-title">📚 なぜ必要？</div>
+                                <p>
+                                    <strong>メイク・日焼け止めは洗顔料だけでは落ちません</strong>。<br>
+                                    クレンジングで油性の汚れ（メイク・日焼け止め）を落とす。<br>
+                                    ❌ クレンジングしないと → 毛穴詰まり → ニキビ・肌荒れの原因
+                                </p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h4>💡 メイクしない人も日焼け止めを塗ったらクレンジング必要？</h4>
+                                <p>
+                                    <strong>→ 商品による。</strong><br>
+                                    ・「石鹸で落ちる」と書いてあれば不要<br>
+                                    ・書いてなければクレンジング推奨<br>
+                                    <strong>おすすめの日焼け止め（ビオレUV）は石鹸で落ちるのでクレンジング不要</strong>
+                                </p>
+                            </div>
+                            
+                            <div class="amount-guide">
+                                <div class="amount-item">
+                                    <div class="amount-label">適量</div>
+                                    <div class="amount-visual">⭕️</div>
+                                    <div style="font-size: 14px; color: #666;">さくらんぼ大</div>
+                                </div>
+                            </div>
+                            
+                            <div class="how-box">
+                                <div class="how-title">🔧 やり方（超詳細版）</div>
+                                <div class="how-steps">
+                                    <div class="how-step-item">
+                                        <strong>手を洗う</strong>
+                                        <div class="how-step-detail">
+                                            まず手を清潔に
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>乾いた手にクレンジングをさくらんぼ大出す</strong>
+                                        <div class="how-step-detail">
+                                            ❌NG：手が濡れた状態でクレンジングをつける → 効果半減
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>乾いた顔全体に馴染ませる（1分）</strong>
+                                        <div class="how-step-detail">
+                                            <strong>馴染ませる順番：</strong>Tゾーン → 頬 → あご → 目元・口元<br>
+                                            <strong>馴染ませ方：</strong>円を描くようにクルクル。メイクが浮いてくる感覚がある。<br>
+                                            ❌NG：ゴシゴシこする
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>ぬるま湯で乳化させる</strong>
+                                        <div class="how-step-detail">
+                                            少量のぬるま湯を手に取り、顔全体に馴染ませる。<br>
+                                            クレンジングが白く濁ったらOK（これを「乳化」という）
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="how-step-item">
+                                        <strong>ぬるま湯でしっかりすすぐ（1分）</strong>
+                                        <div class="how-step-detail">
+                                            20-30回すすぐ。ヌルヌルが完全に取れるまで。
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="tip-box">
+                                <div class="tip-title">💡 初心者向けワンポイント</div>
+                                <p>
+                                    <strong>「オイルクレンジング」「ジェルクレンジング」どっちがいい？</strong><br>
+                                    → 初心者は「ジェルクレンジング」がおすすめ（肌に優しい）<br>
+                                    → 無印良品のマイルドジェルクレンジングが安くて優秀
+                                </p>
+                            </div>
+                            
+                            <div class="step-image">
+                                <img src="skincare-cleansing-detail.jpg" alt="クレンジング詳細手順" style="max-width: 100%; max-height: 100%; display: none;" onerror="this.parentElement.innerHTML='画像: skincare-cleansing-detail.jpg'">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 夜の洗顔・化粧水・美容液・乳液は朝と同じなので省略表記 -->
+                    <div class="info-card">
+                        <h4>🌙 夜の洗顔・化粧水・美容液・乳液</h4>
+                        <p style="margin-bottom: 16px;">
+                            <strong>基本的に朝と同じ手順です</strong>が、以下の点だけ違います：
+                        </p>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>項目</th>
+                                <th>朝</th>
+                                <th>夜</th>
+                            </tr>
+                            <tr>
+                                <td><strong>クレンジング</strong></td>
+                                <td>なし</td>
+                                <td>メイクする人のみ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>洗顔</strong></td>
+                                <td>軽め</td>
+                                <td>しっかり（1日の汚れを落とす）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>化粧水</strong></td>
+                                <td>500円玉大</td>
+                                <td>多めでもOK（1円玉×2）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>美容液</strong></td>
+                                <td>パール粒1つ</td>
+                                <td>同じ</td>
+                            </tr>
+                            <tr>
+                                <td><strong>乳液</strong></td>
+                                <td>10円玉大</td>
+                                <td>乾燥肌の人は多めでもOK</td>
+                            </tr>
+                            <tr>
+                                <td><strong>日焼け止め</strong></td>
+                                <td>必須</td>
+                                <td>なし</td>
+                            </tr>
+                        </table>
+                        
+                        <div style="background: #fff9e6; padding: 16px; border-radius: 8px; margin-top: 16px;">
+                            <strong>💡 夜のポイント</strong><br>
+                            ・洗顔はTゾーン（おでこ・鼻）を特に念入りに<br>
+                            ・化粧水・乳液は朝より多めに塗ってもOK<br>
+                            ・寝ている間に肌は修復されるので、夜のスキンケアは超重要
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 30日チャレンジ -->
+        <div class="section">
+            <div class="challenge-card">
+                <div class="challenge-title">🎯 30日スキンケアチャレンジ</div>
+                <p style="text-align: center; margin-bottom: 24px; color: #065f46;">
+                    毎日チェックして習慣化！30日後には「肌キレイだね」と言われる自分に。
+                </p>
+                
+                <div style="background: white; padding: 24px; border-radius: 12px;">
+                    <h4 style="margin-bottom: 16px; color: #065f46;">📅 30日チャレンジシート（印刷推奨）</h4>
+                    <p style="color: #666; margin-bottom: 16px;">
+                        朝・夜の両方実施したら✅を入れてください。連続記録を伸ばそう！
+                    </p>
+                    <div style="background: #f0f0f0; padding: 20px; border-radius: 8px; text-align: center;">
+                        <a href="#" class="buy-button" style="padding: 16px 40px; font-size: 16px;">
+                            📥 30日チャレンジシートをダウンロード（PDF）
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 最後のメッセージ -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="font-size: 28px; margin-bottom: 16px;">継続すれば必ず変わる！</h2>
+            <p style="font-size: 18px; line-height: 1.8;">
+                スキンケアは筋トレと同じ。<br>
+                1日で大きな変化はないけれど、<br>
+                30日、60日、90日と続ければ<br>
+                確実に「別人」になれます。<br><br>
+                <strong>今日から始めよう！</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

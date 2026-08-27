@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食事方針＆計算ガイド</title>
+    <style>
+        /* ------------------------------------- */
+        /* グローバル変数とリセット (V10.0 統一版) */
+        /* ------------------------------------- */
+        :root {
+            /* V10.0 統一カラースキーム */
+            --primary: #1e3a8a;      
+            --secondary: #059669;    
+            --rest: #bfdbfe;         
+            --accent: #dc2626;       
+            --guide: #0ea5e9;        
+            
+            --bg: #f9fafb;           
+            --card-bg: #ffffff;      
+            --text-main: #1f2937;    
+            --text-sub: #6b7280;     
+
+            --font-stack: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            --font-size-base: 16px;
+        }
+
+        /* ------------------------------------- */
+        /* 共通ベーススタイル (モバイル優先) */
+        /* ------------------------------------- */
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px; 
+            line-height: 1.7; 
+            font-size: var(--font-size-base); 
+        }
+
+        .container {
+            max-width: 900px; 
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px 25px; 
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid var(--secondary); /* 食事ページはSecondaryカラーを使用 */
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 { 
+            font-size: 2.2rem; 
+            color: var(--secondary); 
+            border-bottom: 4px solid var(--secondary); 
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        .subtitle { color: var(--text-sub); font-size: 1.1rem; font-style: italic;}
+
+        h2 { 
+            font-size: 1.6rem; 
+            color: var(--primary); /* h2はPrimaryでアクセント */
+            margin-top: 40px; 
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+        }
+        h3 { 
+            font-size: 1.2rem; 
+            color: var(--secondary); /* secondaryカラーを使用 */
+            margin-top: 30px;
+        }
+        
+        .blog-section {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            background-color: #f0fdf4; /* 薄い緑色 */
+        }
+        
+        /* テーブルスタイル */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        table { min-width: 550px; width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { padding: 10px; border: 1px solid #e5e7eb; }
+        th {
+            background-color: #e6ffed; 
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        td strong { color: var(--secondary); }
+
+        /* レベル別プラン */
+        .level-plan {
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            background-color: #fff7ed; /* 薄いオレンジ */
+            border: 2px solid var(--accent);
+        }
+        .level-plan h4 {
+            color: var(--accent);
+            border-bottom: 1px dashed var(--accent);
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+        ul.check-list { list-style: none; padding-left: 0; }
+        ul.check-list li {
+            position: relative;
+            padding-left: 25px;
+        }
+        ul.check-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        /* CTAボックス */
+        .cta-box {
+            background-color: #eff6ff; 
+            border: 3px solid var(--guide);
+            text-align: center; 
+            margin-top: 30px; 
+            padding: 25px; 
+            border-radius: 12px;
+        }
+        .cta-box a {
+            background-color: var(--guide);
+            padding: 12px 20px;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .cta-box a:active { transform: translateY(1px); }
+
+        /* 戻るボタン */
+        .back-button {
+            display: block; 
+            text-align: center; 
+            margin-top: 40px; 
+            padding: 15px; 
+            background-color: var(--secondary); 
+            color: white; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #06b6d4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍎 食事方針＆計算ガイド</h1>
+            <p class="subtitle">効率的なバルクアップ/ダイエットのための栄養摂取ガイド</p>
+        </header>
+
+        <div class="blog-section">
+            <h2>🔥 1. 筋トレと栄養の関係：なぜタンパク質が必要なのか？</h2>
+            <h3>PFCバランスの基礎知識</h3>
+            </div>
+
+        <div class="blog-section">
+            <h2>📊 2. 【レベル別】高タンパク食事プランの設計</h2>
+            <div class="level-plan">
+                <h4>🌱 レベル1の行動戦略（初心者向け）</h4>
+                </div>
+            
+            <div class="level-plan">
+                <h4>📈 レベル2の行動戦略（中級者向け）</h4>
+                </div>
+        </div>
+
+        <div class="blog-section">
+            <h2>🍎 3. 知っておきたい！高タンパク食材活用術</h2>
+
+            <h3>積極的に摂りたい食材リスト</h3>
+            <h3>コンビニ活用術</h3>
+            </div>
+        
+        <div class="cta-box">
+            <p style="font-size: 1.3rem; font-weight: bold; color: var(--text-main);">食事計画を具体的に計算してみましょう！</p>
+            <a href="#" onclick="alert('計算ツールページへ遷移します。'); return false;" class="guide-button">
+                カロリー＆PFC 計算ツールへ
+            </a>
+        </div>
+        
+        <a href="menu_generator.html" class="back-button">
+            ← メニュー＆ログページに戻る
+        </a>
+    </div>
+</body>
+</html>

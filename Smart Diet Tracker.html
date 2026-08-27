@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Diet Tracker V3 (Final)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #3b82f6; /* 青：現状・体重 */
+            --danger: #ef4444;  /* 赤：目標 */
+            --success: #10b981; /* 緑：体脂肪 */
+            --warning: #f59e0b; /* 橙：計算結果 */
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-sub: #6b7280;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 { margin: 0; font-size: 1.8rem; }
+        p.subtitle { color: var(--text-sub); margin-top: 5px; }
+
+        /* タブ切り替え */
+        .tab-menu {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .tab-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-weight: bold;
+            color: var(--text-sub);
+            transition: color 0.2s;
+            position: relative;
+            top: 2px;
+            font-size: 1rem;
+        }
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* レイアウト */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 768px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+            .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-description {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+
+        /* 入力フォーム周り */
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.9rem; color: var(--text-sub); margin-bottom: 5px; }
+        input[type="number"], input[type="date"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background: var(--card-bg);
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #2563eb; }
+        .btn-danger { background-color: var(--danger); margin-top: 10px; }
+
+        /* 統計表示 */
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .stat-row:last-child { border-bottom: none; }
+
+        .stat-label { font-size: 0.95rem; }
+        .stat-value { font-weight: bold; font-size: 1.1rem; }
+        .strong-label { font-weight: bold; } 
+        
+        .highlight-blue { color: var(--primary); }
+        .highlight-red { color: var(--danger); }
+        .highlight-green { color: var(--success); }
+        
+        .kpi-box {
+            background: #eff6ff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid #bfdbfe;
+        }
+        .kpi-title { font-size: 0.8rem; color: var(--text-sub); }
+        .kpi-number { font-size: 1.8rem; font-weight: bold; color: var(--primary); }
+        .kpi-unit { font-size: 1.1rem; color: var(--text-sub); margin-top: -5px; }
+
+        /* テーブル */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.9rem; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+        th { color: var(--text-sub); font-weight: normal; }
+        
+        .delete-btn { color: var(--danger); cursor: pointer; border: none; background: none; }
+        
+        .result-caption {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-top: 5px;
+            padding: 0 5px;
+            line-height: 1.4;
+        }
+        
+        /* カロリー計算セクションのスタイル改善 */
+        .calc-section {
+            padding: 10px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .calc-note {
+            font-size: 1.05rem; 
+            color: var(--primary); 
+            font-weight: bold;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        .calc-description { 
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            padding: 0 5px;
+        }
+        .calc-formula {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+            word-break: break-all;
+            padding: 5px;
+            background: var(--bg);
+            border-radius: 4px;
+        }
+        .trivia { 
+            font-size: 0.8rem;
+            color: var(--success);
+            border-left: 3px solid var(--success);
+            padding-left: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            background-color: #ecfdf5;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        /* セキュリティアラート */
+        .security-alert {
+            background-color: #fef3c7; /* yellow-100 */
+            color: #d97706; /* yellow-700 */
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 20px;
+            border-left: 5px solid #f59e0b;
+        }
+
+    </style>
+</head>
+<body>
+
+<script>
+    // --------------------------------------------------------------------------------
+    // 【重要】セキュリティ機能：簡易ベーシック認証の実装
+    // --------------------------------------------------------------------------------
+    // ⚠️ 任意のパスワードをここに設定してください（例: 'secret123'）
+    // このパスワードを設定すると、ページを開く際に認証が求められます。
+    const BASIC_AUTH_PASSWORD = 'test'; // <-- ここを変更！
+    
+    // パスワード認証の実行
+    function simpleAuth() {
+        if (BASIC_AUTH_PASSWORD === 'YOUR_SECRET_PASSWORD' || BASIC_AUTH_PASSWORD === '') {
+            console.log("ベーシック認証はスキップされました。BASIC_AUTH_PASSWORDを設定してください。");
+            return true; 
+        }
+
+        let enteredPassword = prompt("このツールにアクセスするにはパスワードが必要です。");
+        
+        while (enteredPassword !== BASIC_AUTH_PASSWORD) {
+            if (enteredPassword === null) {
+                document.body.innerHTML = '<div style="text-align:center; padding: 50px; color: var(--danger);">アクセスが拒否されました。ページを閉じてください。</div>';
+                return false;
+            }
+            enteredPassword = prompt("パスワードが違います。もう一度入力してください。");
+        }
+        
+        return true;
+    }
+
+    if (!simpleAuth()) {
+        throw new Error("認証失敗によりスクリプトを停止");
+    }
+
+    // --------------------------------------------------------------------------------
+    // グローバル変数と初期設定 
+    // --------------------------------------------------------------------------------
+    let entries = JSON.parse(localStorage.getItem('dietEntries')) || [];
+    let settings = JSON.parse(localStorage.getItem('dietSettings')) || {
+        startWeight: 70,
+        startFat: 21,
+        goalWeight: 60,
+        goalFat: 15,
+        goalDate: new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().slice(0, 10), 
+        height: 170,
+        age: 30,
+        gender: 'male',
+        activity: '1.55',
+        currentFat: 21 
+    };
+    
+    let weightChart = null;
+    let fatChart = null;
+    
+    // --------------------------------------------------------------------------------
+    // 初期化処理 
+    // --------------------------------------------------------------------------------
+    window.onload = function() {
+        loadSettingsToUI();
+        document.getElementById('entryDate').valueAsDate = new Date();
+        updateLogSummary();
+        calculateMealPlan(); 
+        renderTable();
+        renderCharts();
+        openTab(null, 'daily-log');
+    };
+    
+    function loadSettingsToUI() {
+        document.getElementById('dispStartWeight').innerText = `${settings.startWeight} kg`;
+        document.getElementById('dispStartFat').innerText = `${settings.currentFat} %`;
+        document.getElementById('dispGoalWeight').innerText = `${settings.goalWeight} kg`;
+        document.getElementById('dispGoalFat').innerText = `${settings.goalFat} %`;
+        document.getElementById('dispGoalDate').innerText = settings.goalDate;
+        
+        document.getElementById('inputHeight').value = settings.height;
+        document.getElementById('inputAge').value = settings.age;
+        document.getElementById('inputGender').value = settings.gender;
+        document.getElementById('inputActivity').value = settings.activity;
+        document.getElementById('inputCurrentWeight').value = settings.startWeight;
+        document.getElementById('inputCurrentFat').value = settings.currentFat; 
+        document.getElementById('inputGoalWeight').value = settings.goalWeight;
+        document.getElementById('inputGoalDate').value = settings.goalDate;
+    }
+
+    function openTab(evt, tabName) {
+        let i, tabcontent, tablinks;
+        
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        
+        document.getElementById(tabName).style.display = "block";
+        
+        if (evt) evt.currentTarget.className += " active";
+        else document.querySelector(`.tab-button[onclick*="${tabName}"]`).className += " active";
+        
+        if (tabName === 'daily-log') {
+            renderCharts();
+        }
+    }
+    
+    function calculateMealPlan() {
+        const height = parseFloat(document.getElementById('inputHeight').value) || 0;
+        const age = parseFloat(document.getElementById('inputAge').value) || 0;
+        const gender = document.getElementById('inputGender').value;
+        const activityFactor = parseFloat(document.getElementById('inputActivity').value) || 1.2;
+        const currentWeight = parseFloat(document.getElementById('inputCurrentWeight').value) || 0;
+        const currentFat = parseFloat(document.getElementById('inputCurrentFat').value) || 0;
+        const goalWeight = parseFloat(document.getElementById('inputGoalWeight').value) || 0;
+        const goalDateStr = document.getElementById('inputGoalDate').value;
+        
+        settings.height = height;
+        settings.age = age;
+        settings.gender = gender;
+        settings.activity = activityFactor.toString();
+        settings.startWeight = currentWeight;
+        settings.currentFat = currentFat; 
+        settings.goalWeight = goalWeight;
+        settings.goalDate = goalDateStr;
+        localStorage.setItem('dietSettings', JSON.stringify(settings));
+        updateLogSummary(); 
+        
+        if (currentWeight === 0 || height === 0 || age === 0 || currentFat === 0) {
+            document.getElementById('resultLBM').innerText = '-- kg';
+            document.getElementById('resultBMR').innerText = '-- kcal';
+            document.getElementById('resultTDEE').innerText = '-- kcal';
+            document.getElementById('resultTargetCalorie').innerText = '--';
+            document.getElementById('resultDays').innerText = '-- 日';
+            document.getElementById('resultDailyLoss').innerText = '-- g/日';
+            return;
+        }
+
+        const fatMass = currentWeight * (currentFat / 100);
+        const lbm = currentWeight - fatMass;
+        document.getElementById('resultLBM').innerText = `${lbm.toFixed(1)} kg`;
+        
+        let bmr = 0;
+        if (gender === 'male') {
+            bmr = (10 * currentWeight) + (6.25 * height) - (5 * age) + 5;
+        } else { 
+            bmr = (10 * currentWeight) + (6.25 * height) - (5 * age) - 161;
+        }
+        document.getElementById('resultBMR').innerText = `${Math.round(bmr).toLocaleString()} kcal`;
+        
+        const tdee = bmr * activityFactor;
+        document.getElementById('resultTDEE').innerText = `${Math.round(tdee).toLocaleString()} kcal`;
+        
+        let targetCalorie = 0;
+        let dailyLossG = 0;
+        let daysDiff = 0;
+        
+        const today = new Date();
+        const goalDate = new Date(goalDateStr);
+        
+        if (goalDateStr) {
+             const timeDiff = goalDate.getTime() - today.getTime();
+             daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        }
+
+        const targetLossKg = currentWeight - goalWeight;
+        
+        if (daysDiff > 0 && targetLossKg > 0) {
+            const totalCalorieDeficit = targetLossKg * 7200;
+            const requiredDailyDeficit = totalCalorieDeficit / daysDiff;
+            
+            targetCalorie = tdee - requiredDailyDeficit;
+            dailyLossG = (targetLossKg / daysDiff) * 1000;
+            
+        } else {
+            targetCalorie = tdee; 
+            dailyLossG = 0;
+        }
+
+        document.getElementById('resultDays').innerText = daysDiff > 0 ? `${daysDiff}` : '--';
+        document.getElementById('resultDailyLoss').innerText = dailyLossG > 0 ? `${Math.round(dailyLossG)} g` : '--';
+        
+        let finalTargetCalorie = Math.round(targetCalorie);
+        const roundedBMR = Math.round(bmr);
+        
+        if (finalTargetCalorie < roundedBMR) {
+            finalTargetCalorie = roundedBMR;
+        } else if (finalTargetCalorie < 0) {
+             finalTargetCalorie = 0;
+        } else if (targetLossKg <= 0) {
+            finalTargetCalorie = Math.round(tdee);
+        }
+
+        document.getElementById('resultTargetCalorie').innerText = finalTargetCalorie.toLocaleString();
+        
+        renderCharts();
+    }
+
+
+    function updateLogSummary() {
+        document.getElementById('dispStartWeight').innerText = `${settings.startWeight} kg`;
+        document.getElementById('dispStartFat').innerText = `${settings.currentFat} %`;
+        document.getElementById('dispGoalWeight').innerText = `${settings.goalWeight} kg`;
+        document.getElementById('dispGoalFat').innerText = `${settings.goalFat} %`;
+        document.getElementById('dispGoalDate').innerText = settings.goalDate;
+        
+        const startFatMass = (settings.startWeight * settings.currentFat / 100).toFixed(1);
+        document.getElementById('dispStartFatMass').innerText = startFatMass + ' kg';
+    }
+
+    function addEntry() {
+        const date = document.getElementById('entryDate').value;
+        const weight = parseFloat(document.getElementById('entryWeight').value);
+        const fat = parseFloat(document.getElementById('entryFat').value);
+
+        if (!date || !weight) {
+            alert("日付と体重は必須です");
+            return;
+        }
+
+        const existingIndex = entries.findIndex(e => e.date === date);
+        const newEntry = { date, weight, fat: isNaN(fat) ? null : fat };
+
+        if (existingIndex !== -1) {
+             entries[existingIndex] = newEntry; 
+        } else {
+             entries.push(newEntry); 
+        }
+        
+        entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        localStorage.setItem('dietEntries', JSON.stringify(entries));
+        
+        renderTable();
+        renderCharts();
+
+        document.getElementById('entryWeight').value = '';
+        document.getElementById('entryFat').value = '';
+    }
+
+    function renderTable() {
+        const tbody = document.querySelector('#historyTable tbody');
+        tbody.innerHTML = '';
+        [...entries].reverse().forEach((entry, index) => {
+            const originalIndex = entries.length - 1 - index;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${entry.date}</td>
+                <td>${entry.weight} kg</td>
+                <td>${entry.fat !== null ? entry.fat + '%' : '-'}</td>
+                <td><button class="delete-btn" onclick="deleteEntry(${originalIndex})">×</button></td>
+            `;
+            tbody.appendChild(tr); 
+        });
+    }
+
+    function deleteEntry(index) {
+        entries.splice(index, 1);
+        localStorage.setItem('dietEntries', JSON.stringify(entries));
+        renderTable();
+        renderCharts();
+    }
+
+    function clearAllData() {
+        if(confirm("全ての記録を削除しますか？")) {
+            entries = [];
+            localStorage.removeItem('dietEntries');
+            renderTable();
+            renderCharts();
+            alert("全ての記録データが削除されました。設定タブから目標を再入力してください。");
+        }
+    }
+
+    function renderCharts() {
+        if (document.getElementById('daily-log').style.display === 'none') return;
+        
+        const ctxWeight = document.getElementById('progressChart').getContext('2d');
+        const ctxFat = document.getElementById('fatChart').getContext('2d');
+
+        const labels = entries.map(e => e.date);
+        const weightData = entries.map(e => e.weight);
+        const fatData = entries.map(e => e.fat);
+
+        const goalWeightData = new Array(labels.length).fill(settings.goalWeight);
+        const goalFatData = new Array(labels.length).fill(settings.goalFat);
+
+        if (weightChart) weightChart.destroy();
+        if (fatChart) fatChart.destroy();
+
+        weightChart = new Chart(ctxWeight, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '体重 (kg)',
+                        data: weightData,
+                        borderColor: '#3b82f6',
+                        backgroundColor: '#3b82f6',
+                        tension: 0.1,
+                        pointBackgroundColor: '#3b82f6'
+                    },
+                    {
+                        label: '目標体重 (kg)',
+                        data: goalWeightData,
+                        borderColor: '#ef4444',
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '体重の推移' }
+                },
+                scales: {
+                    y: { 
+                        suggestedMin: settings.goalWeight - 2, 
+                        suggestedMax: settings.startWeight + 2,
+                        title: { display: true, text: '体重 (kg)' }
+                    },
+                    x: {
+                        title: { display: true, text: '日付' }
+                    }
+                }
+            }
+        });
+
+        fatChart = new Chart(ctxFat, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: '体脂肪率 (%)',
+                        data: fatData,
+                        borderColor: '#10b981', 
+                        backgroundColor: '#10b981',
+                        tension: 0.1,
+                        pointBackgroundColor: '#10b981'
+                    },
+                    {
+                        label: '目標体脂肪率 (%)',
+                        data: goalFatData,
+                        borderColor: '#ef4444',
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: { display: true, text: '体脂肪率の推移' }
+                },
+                scales: {
+                    y: {
+                        title: { display: true, text: '体脂肪率 (%)' }
+                    },
+                    x: {
+                        title: { display: true, text: '日付' }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<div class="container">
+    <header>
+        <h1>Smart Diet Tracker</h1>
+        <p class="subtitle">目標設定と日々の記録をこれ一つで管理</p>
+    </header>
+    
+    <div class="security-alert">
+        🔑 <strong>重要</strong>: データは<strong>あなたのブラウザのみ</strong>に保存されます。<br>
+        サーバーへの<strong>個人情報の送信は一切ありません</strong>のでご安心ください。異なる端末での同期はできません。
+        <p style="margin-top: 10px; font-size: 0.8rem; color: #a16207;">
+            ※<strong>ベーシック認証</strong>を有効にするには、スクリプト内の`BASIC_AUTH_PASSWORD`に任意のパスワードを設定してください。
+        </p>
+    </div>
+
+    <div class="card" style="margin-bottom: 30px; margin-top: 20px;">
+        <div class="card-header">💡 はじめに（具体的なアクションプラン）</div>
+        <ol style="font-size: 0.95rem; padding-left: 20px;">
+            <li><strong>アクション①【方針設定】</strong>：<strong>「🍎 食事方針・計算」タブ</strong>を開き、<strong>現在の体重、目標体重、目標日</strong>などすべての必須項目を入力します。</li>
+            <li><strong>アクション②【目標確認】</strong>：計算結果セクションで、<strong>目標達成に必要な「1日の摂取カロリー」</strong>を確認します。
+                <p class="result-caption">（ヒント：この目標カロリーを基準に日々の食事を調整し、<strong>維持カロリー (TDEE) を上回らない</strong>ように意識しましょう。）</p>
+            </li>
+            <li><strong>アクション③【日々の記録】</strong>：<strong>「📅 日々の記録」タブ</strong>に戻り、毎日<strong>「体重」</strong>と<strong>「体脂肪率」</strong>を記録し、<strong>「記録する」ボタン</strong>を押します。</li>
+            <li><strong>アクション④【進捗確認】</strong>：グラフで、目標ラインに対する自分の体重・体脂肪の進捗をチェックします。<strong>停滞したら、アクション①に戻って目標日を見直すか、活動レベルを上げる</strong>ことを検討しましょう。</li>
+        </ol>
+    </div>
+    
+    <div class="tab-menu">
+        <button class="tab-button active" onclick="openTab(event, 'daily-log')">📅 日々の記録</button>
+        <button class="tab-button" onclick="openTab(event, 'meal-plan')">🍎 食事方針・計算</button>
+    </div>
+
+    <div id="daily-log" class="tab-content active">
+        
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">
+                    <span style="border-left: 4px solid var(--primary); padding-left: 10px;">現在の体組成 (Start)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">開始時 体重:</span>
+                    <span class="stat-value" id="dispStartWeight">-- kg</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">開始時 体脂肪率:</span>
+                    <span class="stat-value" id="dispStartFat">-- %</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">開始時 脂肪量:</span>
+                    <span class="stat-value highlight-blue" id="dispStartFatMass">-- kg</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span style="border-left: 4px solid var(--danger); padding-left: 10px;">理想の体組成 (Goal)</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">目標体重:</span>
+                    <span class="stat-value highlight-red" id="dispGoalWeight">-- kg</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">目標体脂肪率:</span>
+                    <span class="stat-value highlight-red" id="dispGoalFat">-- %</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label strong-label">目標達成予定日:</span>
+                    <span class="stat-value highlight-red" id="dispGoalDate">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="card-header">進捗グラフ</div>
+            <div style="height: 300px;">
+                <canvas id="progressChart"></canvas>
+            </div>
+            <div style="height: 300px; margin-top: 20px;">
+                <canvas id="fatChart"></canvas>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">今日の記録を追加</div>
+                <div class="input-group">
+                    <label>日付</label>
+                    <input type="date" id="entryDate">
+                </div>
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 0;">
+                    <div class="input-group">
+                        <label>体重 (kg)</label>
+                        <input type="number" id="entryWeight" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>体脂肪率 (%)</label>
+                        <input type="number" id="entryFat" step="0.1">
+                    </div>
+                </div>
+                <button class="btn" onclick="addEntry()">記録する</button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    履歴
+                    <button class="delete-btn" style="font-size:0.8rem;" onclick="clearAllData()">全リセット</button>
+                </div>
+                <div style="max-height: 250px; overflow-y: auto;">
+                    <table id="historyTable">
+                        <thead>
+                            <tr>
+                                <th>日付</th>
+                                <th>体重</th>
+                                <th>体脂肪率</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="meal-plan" class="tab-content">
+        
+        <div class="card card-description">
+            このセクションでは、身長・年齢・活動レベルに基づき、<strong>目標達成に必要な1日の摂取カロリー</strong>をオーダーメイドで自動計算します。
+        </div>
+
+        <div class="grid">
+            
+            <div class="card">
+                <div class="card-header">① 基本情報と目標設定</div>
+                
+                <div class="input-group">
+                    <label>身長 (cm)</label>
+                    <input type="number" id="inputHeight" placeholder="例: 160" onchange="calculateMealPlan()">
+                </div>
+                <div class="input-group">
+                    <label>年齢 (歳)</label>
+                    <input type="number" id="inputAge" placeholder="例: 35" onchange="calculateMealPlan()">
+                </div>
+                <div class="input-group">
+                    <label>性別</label>
+                    <select id="inputGender" onchange="calculateMealPlan()">
+                        <option value="male">男性</option>
+                        <option value="female">女性</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>活動レベル（運動強度）</label>
+                    <select id="inputActivity" onchange="calculateMealPlan()">
+                        <option value="1.2">1.2 (ほぼ運動しない)</option>
+                        <option value="1.375">1.375 (軽い運動/週1-3日)</option>
+                        <option value="1.55" selected>1.55 (中程度の運動/週3-5日)</option>
+                        <option value="1.725">1.725 (激しい運動/週6-7日)</option>
+                        <option value="1.9">1.9 (非常に激しい運動/肉体労働)</option>
+                    </select>
+                </div>
+                
+                <hr style="margin: 20px 0;">
+                
+                <div class="input-group">
+                    <label>現在の体重 (kg)</label>
+                    <input type="number" id="inputCurrentWeight" placeholder="例: 70" onchange="calculateMealPlan()">
+                </div>
+                <div class="input-group">
+                    <label>現在の体脂肪率 (%)</label>
+                    <input type="number" id="inputCurrentFat" placeholder="例: 25" onchange="calculateMealPlan()">
+                </div>
+                <div class="input-group">
+                    <label>目標体重 (kg)</label>
+                    <input type="number" id="inputGoalWeight" placeholder="例: 60" onchange="calculateMealPlan()">
+                </div>
+                <div class="input-group">
+                    <label>目標達成予定日</label>
+                    <input type="date" id="inputGoalDate" onchange="calculateMealPlan()">
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">② カロリー計算結果（目標摂取カロリーの算出）</div>
+                
+                <div class="calc-section">
+                    <div class="calc-note">体の中身を知る：除脂肪体重 (LBM)</div>
+                    <div class="calc-description">
+                        あなたの体全体から、純粋な「脂肪」の重さを引いた部分の重さです。筋肉、骨、内臓などが含まれ、基礎代謝に大きく関わる重要な数値です。
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label strong-label">除脂肪体重 (LBM):</span>
+                        <span class="stat-value highlight-green" id="resultLBM">-- kg</span>
+                    </div>
+                    <div class="calc-formula">
+                        除脂肪体重 = 現在の体重 × (1 - 体脂肪率 / 100)
+                    </div>
+                    <div class="trivia">
+                        ✅ <strong>豆知識</strong>: LBMを高く保つ（筋肉を減らさない）ことが、ダイエット成功後のリバウンド防止に繋がります。
+                    </div>
+                </div>
+
+                <div class="calc-section">
+                    <div class="calc-note">生きていくのに必要なエネルギー：基礎代謝量 (BMR)</div>
+                    <div class="calc-description">
+                        あなたが<strong>1日中なにもせず、ただ安静にしていても消費される最低限のカロリー</strong>です。心臓を動かしたり、呼吸をしたり、体温を保つために使われます。
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label strong-label">基礎代謝量 (BMR):</span>
+                        <span class="stat-value highlight-blue" id="resultBMR">-- kcal</span>
+                    </div>
+                    <div class="trivia">
+                        ✅ <strong>豆知識</strong>: BMRは主に筋肉量に左右されます。筋肉が増えればBMRも増え、痩せやすい体になります。
+                    </div>
+                </div>
+                
+                <div class="calc-section">
+                    <div class="calc-note">現状維持に必要なエネルギー：総消費カロリー (TDEE)</div>
+                    <div class="calc-description">
+                        <strong>基礎代謝 (BMR) に、あなたの日常的な活動や運動で消費されるカロリーを加算</strong>した、1日全体で消費される総カロリーです。このカロリーを摂取すれば、体重は維持されます。
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label strong-label">維持カロリー (TDEE):</span>
+                        <span class="stat-value highlight-blue" id="resultTDEE">-- kcal</span>
+                    </div>
+                    <div class="calc-formula">
+                        TDEE = BMR × 活動レベル係数
+                    </div>
+                    <div class="trivia">
+                        ✅ <strong>豆知識</strong>: ダイエット成功の鍵は、「摂取カロリー ＜ TDEE」の状態を保つことです。
+                    </div>
+                </div>
+
+                <div class="calc-section" style="border-bottom: none;">
+                    <div class="calc-note">目標達成に必要な減量ペース</div>
+                    <div class="stat-row">
+                        <span class="stat-label strong-label">減量目標日数:</span>
+                        <span class="stat-value highlight-red" id="resultDays">-- 日</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label strong-label">1日あたりに必要な減量幅:</span>
+                        <span class="stat-value highlight-red" id="resultDailyLoss">-- g/日</span>
+                    </div>
+                </div>
+                
+                <div class="kpi-box">
+                    <div class="kpi-title">目標達成に必要な1日の<strong>摂取カロリー</strong></div>
+                    <div class="kpi-number" id="resultTargetCalorie">--</div>
+                    <div class="kpi-unit">kcal/日</div>
+                </div>
+                <div class="calc-formula" style="text-align: center;">
+                    目標摂取カロリー ≈ TDEE - (目標体重差を達成するための1日あたりのカロリー赤字)
+                </div>
+                <p class="result-caption" style="text-align: center; color: var(--danger); font-weight: bold;">
+                    <strong>⚠️ 注意</strong>: この数値は「基礎代謝量 (BMR)」を下回ってはいけません。BMRを下回ると、体調不良や筋肉減少に繋がり、かえって危険です。
+                </p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</body>
+</html>
